@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OG Emmy — EPK</title>
+<meta name="description" content="OG Emmy — London-based Nigerian Afrobeats artist. Official press kit: bio, releases, video, music, events and booking.">
+<meta property="og:title" content="OG Emmy — EPK">
+<meta property="og:description" content="London-based Nigerian artist. Music built to move the body and the soul.">
+<meta property="og:image" content="./assets/photography/hero-spotlight-profile.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230a0908'/><text x='50' y='56' font-family='Impact,Haettenschweiler,sans-serif' font-size='62' fill='%23d8a94a' text-anchor='middle' dominant-baseline='central'>OG</text></svg>">
+<link rel="stylesheet" href="./styles.css">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  img { display: block; }
+
+  /* ---------- Design-system components ---------- */
+  .btn {
+    font-family: var(--font-body); font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; border: none; border-radius: 25px;
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background var(--duration-fast) var(--ease-standard),
+                color var(--duration-fast) var(--ease-standard),
+                transform var(--duration-fast) var(--ease-standard);
+  }
+  .btn-sm { padding: 8px 14px; font-size: 12px; }
+  .btn-md { padding: 12px 22px; font-size: 14px; }
+  .btn-lg { padding: 16px 30px; font-size: 15px; }
+  .btn-primary { background: var(--accent-primary); color: var(--text-on-inverse); }
+  .btn-primary:hover { background: var(--accent-primary-hover); }
+  .btn-primary:active { background: var(--accent-primary-press); }
+  .btn-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--border-strong); }
+  .btn-secondary:hover { background: var(--bg-surface-raised); }
+
+  .badge {
+    display: inline-flex; align-items: center; padding: 4px 10px; border-radius: var(--radius-pill);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .badge-gold { background: rgba(216,169,74,.14); color: var(--gold-300); border: 1px solid rgba(216,169,74,.4); }
+  .badge-rose { background: rgba(200,73,58,.14); color: var(--rose-400); border: 1px solid rgba(200,73,58,.4); }
+  .badge-neutral { background: var(--bg-surface-raised); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+
+  .section-label {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold-300); display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before { content: ""; width: 24px; height: 1px; background: var(--gold-400); flex: none; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; font-family: var(--font-body); }
+  .field > span { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-tertiary); }
+  .field input {
+    background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+    padding: 12px 14px; color: var(--text-primary); font-size: 15px; outline: none;
+    font-family: var(--font-body); transition: border-color var(--duration-fast) var(--ease-standard);
+  }
+  .field input:focus { border-color: var(--focus-ring); }
+
+  .social { display: inline-flex; width: 32px; height: 32px; transition: opacity var(--duration-fast) var(--ease-standard); }
+  .social:hover { opacity: .75; }
+  .social img { width: 100%; height: 100%; }
+  .social-sm { width: 22px; height: 22px; }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 700ms var(--ease-standard) var(--d, 0ms),
+                transform 700ms var(--ease-standard) var(--d, 0ms);
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Splash ---------- */
+  #splash {
+    position: fixed; inset: 0; z-index: 100; background: var(--bg-page);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    transition: opacity 600ms var(--ease-standard);
+  }
+  #splash.fade { opacity: 0; pointer-events: none; }
+  .splash-glow {
+    position: absolute; width: min(92vw, 720px); aspect-ratio: 1; border-radius: 50%;
+    background: var(--spotlight-gradient); pointer-events: none;
+    animation: splashGlow 2.4s var(--ease-standard) forwards;
+  }
+  @keyframes splashGlow {
+    0%   { transform: scale(.35); opacity: 0; }
+    45%  { opacity: 1; }
+    100% { transform: scale(1.12); opacity: .85; }
+  }
+  .splash-logo {
+    position: relative; width: min(64vw, 260px);
+    animation: splashLogo 1200ms var(--ease-out) both,
+               splashPulse 1.7s 1200ms ease-in-out infinite;
+  }
+  @keyframes splashLogo {
+    0%   { opacity: 0; transform: scale(.82) translateY(10px); filter: blur(8px); }
+    60%  { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+  }
+  @keyframes splashPulse { 0%,100% { opacity: 1; } 50% { opacity: .82; } }
+
+  #app { background: var(--bg-page); opacity: 0; transition: opacity 900ms var(--ease-standard); }
+  #app.ready { opacity: 1; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; height: 92vh; min-height: 640px; overflow: hidden; display: flex; align-items: flex-end; }
+  .hero-slide {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%;
+    opacity: 0; transition: opacity 1400ms var(--ease-standard);
+  }
+  .hero-slide.active { opacity: 1; }
+  .hero-scrim { position: absolute; inset: 0; background: var(--scrim-bottom); }
+  .hero-dots { position: absolute; bottom: var(--space-6); right: var(--space-8); display: flex; gap: 8px; }
+  .hero-dots span {
+    width: 8px; height: 3px; border-radius: 2px; background: rgba(244,239,228,.35);
+    transition: width 300ms var(--ease-standard), background 300ms var(--ease-standard);
+  }
+  .hero-dots span.active { width: 22px; background: var(--gold-300); }
+  .hero-content {
+    position: relative; padding: 0 var(--space-8) var(--space-9);
+    display: flex; flex-direction: column; gap: var(--space-4); max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em;
+    color: var(--gold-300); text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-display); font-size: var(--size-display-xl); color: var(--paper-0);
+    margin: 0; line-height: var(--lh-tight); letter-spacing: -.01em;
+  }
+  .hero-sub { font-family: var(--font-body); font-size: 19px; color: var(--text-secondary); max-width: 560px; margin: 0; }
+  .hero-cta { display: flex; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
+
+  /* ---------- Bio ---------- */
+  .sec-bio {
+    padding: var(--space-9) var(--space-8); max-width: var(--container-max); margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-8); align-items: center;
+  }
+  .sec-bio > img { width: 100%; border-radius: var(--radius-md); object-fit: cover; aspect-ratio: 4/5; }
+  .bio-text { display: flex; flex-direction: column; gap: var(--space-5); }
+  .bio-text h2 { font-family: var(--font-display); color: var(--paper-0); font-size: var(--size-display-md); margin: 0; line-height: 1; }
+  .bio-text p { font-family: var(--font-body); color: var(--text-secondary); font-size: 16px; line-height: var(--lh-normal); margin: 0; }
+  .badge-row { display: flex; gap: 10px; }
+
+  /* ---------- Generic stacked section ---------- */
+  .sec-stack {
+    padding: var(--space-9) var(--space-8); max-width: var(--container-max); margin: 0 auto;
+    display: flex; flex-direction: column; gap: var(--space-6);
+  }
+
+  /* ---------- Releases ---------- */
+  .releases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+  .release { cursor: pointer; display: flex; flex-direction: column; gap: 10px; }
+  .release-cover { position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: var(--radius-md); }
+  .release-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 420ms var(--ease-standard); }
+  .release:hover .release-cover img { transform: scale(1.04); }
+  .release-badge { position: absolute; top: 10px; left: 10px; }
+  .release-title { font-family: var(--font-script); font-size: 30px; color: var(--paper-0); }
+  .release-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); letter-spacing: .04em; }
+
+  /* ---------- Gallery ---------- */
+  .gallery-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .gallery-grid img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: var(--radius-md); }
+
+  /* ---------- Full-page media stages (Watch / Listen / Follow) ---------- */
+  .stage {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: var(--space-9) var(--space-8); position: relative; overflow: hidden;
+  }
+  .stage-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background: var(--spotlight-gradient);
+    animation: spotDrift 16s ease-in-out infinite alternate;
+  }
+  @keyframes spotDrift {
+    from { transform: scale(1) translateY(0); opacity: .6; }
+    to   { transform: scale(1.18) translateY(-3%); opacity: 1; }
+  }
+  .stage-inner {
+    position: relative; width: 100%; max-width: 960px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: var(--space-6); align-items: flex-start;
+  }
+  .stage-head { display: flex; flex-direction: column; gap: var(--space-3); }
+  .stage-title { font-family: var(--font-display); font-size: var(--size-display-md); color: var(--paper-0); margin: 0; line-height: 1; }
+  .stage-script { font-family: var(--font-script); font-size: clamp(52px, 9vw, 104px); color: var(--gold-300); line-height: .85; }
+  .stage-sub { font-family: var(--font-mono); font-size: 13px; letter-spacing: .1em; color: var(--text-tertiary); text-transform: uppercase; }
+  .media-frame {
+    width: 100%; border-radius: var(--radius-md); overflow: hidden;
+    box-shadow: var(--shadow-gold-glow), var(--shadow-lg);
+  }
+  .media-frame iframe { display: block; width: 100%; border: none; }
+  .embed-yt { aspect-ratio: 16/9; }
+  .embed-spotify { height: 420px; }
+  .embed-ig { height: 560px; background: var(--bg-surface-raised); }
+  .stream-links { display: flex; gap: var(--space-5); align-items: center; flex-wrap: wrap; }
+  .float { animation: floaty 6.5s ease-in-out infinite; }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  /* ---------- Events ---------- */
+  .events-panel {
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+    background: var(--bg-surface-raised); box-shadow: var(--shadow-md);
+    padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4);
+    align-items: flex-start; position: relative; overflow: hidden;
+  }
+  .events-panel::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at 80% 0%, rgba(216,169,74,.10), rgba(10,9,8,0) 55%);
+  }
+  .events-status { position: relative; }
+  .events-headline { position: relative; font-family: var(--font-display); font-size: var(--size-display-md); color: var(--paper-0); margin: 0; line-height: 1; }
+  .events-note { position: relative; font-family: var(--font-body); color: var(--text-secondary); font-size: 16px; line-height: var(--lh-normal); max-width: 560px; margin: 0; }
+
+  /* ---------- Merch ---------- */
+  .merch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+  .merch-card {
+    position: relative; aspect-ratio: 4/5; border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle); background: var(--bg-surface-raised);
+    overflow: hidden; display: flex; align-items: flex-end;
+  }
+  .merch-card::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 35%, rgba(244,239,228,.08), rgba(10,9,8,0) 60%);
+  }
+  .merch-card::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent 35%, rgba(216,169,74,.07) 50%, transparent 65%);
+    background-size: 220% 100%; animation: shimmer 3.6s linear infinite;
+  }
+  @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+  .merch-card .badge { position: absolute; top: 12px; left: 12px; z-index: 2; }
+  .merch-name {
+    position: relative; z-index: 2; padding: var(--space-5);
+    font-family: var(--font-body); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; font-size: 15px; color: var(--text-secondary);
+  }
+  .merch-note { font-family: var(--font-mono); font-size: 13px; color: var(--text-tertiary); }
+
+  /* ---------- Booking ---------- */
+  .sec-booking {
+    padding: var(--space-9) var(--space-8); max-width: 700px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: var(--space-5);
+  }
+  .sec-booking h2 { font-family: var(--font-display); color: var(--paper-0); font-size: 40px; margin: 0; }
+  #bookingForm { display: flex; flex-direction: column; gap: var(--space-4); }
+  .booking-thanks { font-family: var(--font-body); color: var(--gold-300); font-size: 16px; }
+  .booking-email { font-family: var(--font-mono); font-size: 13px; color: var(--text-tertiary); }
+  .booking-email a { color: var(--gold-300); }
+  .booking-social { display: flex; gap: 16px; margin-top: var(--space-4); }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    padding: var(--space-7) var(--space-8); border-top: 1px solid var(--border-subtle);
+    display: flex; flex-direction: column; gap: var(--space-5);
+  }
+  .footer-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-top .footer-logo { height: 56px; }
+  .footer-social { display: flex; gap: 16px; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary);
+  }
+  .footer-credit { color: var(--text-tertiary); text-decoration: none; transition: color var(--duration-fast) var(--ease-standard); }
+  .footer-credit:hover { color: var(--gold-300); }
+
+  /* ---------- Back to top ---------- */
+  #backToTop {
+    position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px; border-radius: var(--radius-pill);
+    background: var(--accent-primary); color: var(--text-on-inverse); border: none; cursor: pointer;
+    font-size: 18px; font-weight: 700; box-shadow: var(--shadow-lg); z-index: 20;
+    opacity: 0; transform: translateY(12px); pointer-events: none;
+    transition: opacity 300ms var(--ease-standard), transform 300ms var(--ease-standard), background 120ms var(--ease-standard);
+  }
+  #backToTop.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  /* ---------- Modal ---------- */
+  .modal {
+    position: fixed; inset: 0; background: rgba(10,9,8,.85); z-index: 50;
+    align-items: center; justify-content: center; animation: fadeIn 250ms var(--ease-standard);
+  }
+  .modal[hidden] { display: none; }
+  .modal:not([hidden]) { display: flex; }
+  .modal-card {
+    background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+    padding: var(--space-6); display: flex; flex-direction: column; gap: 12px; align-items: center;
+  }
+  .modal-title { font-family: var(--font-script); font-size: 40px; color: var(--gold-300); }
+  .modal-sub { font-family: var(--font-body); color: var(--text-secondary); font-size: 14px; }
+  .modal-close {
+    background: var(--accent-primary); border: none; border-radius: 25px; padding: 10px 20px;
+    font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 12px; cursor: pointer;
+    color: var(--text-on-inverse); transition: background var(--duration-fast) var(--ease-standard);
+  }
+  .modal-close:hover { background: var(--accent-primary-hover); }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .sec-bio { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .merch-grid { grid-template-columns: repeat(3, 1fr); }
+    .embed-ig { height: 620px; }
+  }
+  @media (max-width: 640px) {
+    .releases-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .merch-grid { grid-template-columns: 1fr; }
+    .sec-bio, .sec-stack, .sec-booking { padding: var(--space-8) var(--space-5); }
+    .stage { padding: var(--space-8) var(--space-5); }
+    .hero-content { padding: 0 var(--space-5) var(--space-8); }
+    .footer { padding: var(--space-7) var(--space-5); }
+    .events-panel { padding: var(--space-6); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .splash-logo, .splash-glow, .stage-bg, .float, .merch-card::after { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="splash-glow"></div>
+  <img class="splash-logo" src="./assets/logo.png" alt="OG Emmy">
+</div>
+
+<div id="app">
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hero-slide active" src="./assets/photography/hero-spotlight-profile.jpg" alt="">
+    <img class="hero-slide" src="./assets/photography/portrait-amber-closeup.jpg" alt="">
+    <img class="hero-slide" src="./assets/photography/portrait-hood-sunglasses.jpg" alt="">
+    <img class="hero-slide" src="./assets/photography/portrait-wine-orange.jpg" alt="">
+    <div class="hero-scrim"></div>
+    <div class="hero-dots"><span class="active"></span><span></span><span></span><span></span></div>
+    <div class="hero-content">
+      <div class="reveal hero-eyebrow">Afropop · R&amp;B · Afro-dancehall</div>
+      <h1 class="reveal" style="--d:100ms">OG EMMY</h1>
+      <p class="reveal hero-sub" style="--d:200ms">London-based Nigerian artist. Music built to move the body and the soul.</p>
+      <div class="reveal hero-cta" style="--d:300ms">
+        <button id="streamBtn" class="btn btn-primary btn-lg">Stream "My Baby"</button>
+        <button id="heroBooking" class="btn btn-secondary btn-lg">Booking Enquiry</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bio -->
+  <section class="sec-bio">
+    <img class="reveal" src="./assets/photography/portrait-amber-closeup.jpg" alt="OG Emmy portrait">
+    <div class="bio-text">
+      <div class="reveal section-label">Who is OG Emmy</div>
+      <h2 class="reveal" style="--d:80ms">Culture. Confidence. Ambition.</h2>
+      <p class="reveal" style="--d:140ms">Born and raised in Rivers State, Nigeria, OG Emmy&rsquo;s sound is a vibrant mix of rhythm and emotion &mdash; designed to uplift, connect, and inspire people to dance away their sorrows. His debut single &lsquo;KitKat&rsquo;, featuring Ghanaian producer Magnom, marked him as a rising force in Afrobeats.</p>
+      <p class="reveal" style="--d:200ms">Now based in London, he continues to push the culture forward &mdash; a proud cultural ambassador dedicated to uplifting the youth and spreading the sound of Afrobeat worldwide.</p>
+      <div class="reveal badge-row" style="--d:260ms">
+        <span class="badge badge-gold">Rivers State, Nigeria</span>
+        <span class="badge badge-neutral">Based in London</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Releases -->
+  <section class="sec-stack">
+    <div class="reveal section-label">Releases</div>
+    <div class="releases-grid">
+      <div class="reveal release" data-title="My Baby">
+        <div class="release-cover">
+          <img src="./assets/photography/cover-my-baby.png" alt="My Baby cover art">
+          <div class="release-badge"><span class="badge badge-gold">New Single</span></div>
+        </div>
+        <div class="release-title">My Baby</div>
+        <div class="release-meta">Prod. Spykida · Afrodancehall</div>
+      </div>
+      <div class="reveal release" data-title="DND" style="--d:100ms">
+        <div class="release-cover">
+          <img src="./assets/photography/portrait-wine-orange.jpg" alt="DND cover art">
+          <div class="release-badge"><span class="badge badge-gold">Latest</span></div>
+        </div>
+        <div class="release-title">DND</div>
+        <div class="release-meta">Prod. Skonthetrack · Afropop</div>
+      </div>
+      <div class="reveal release" data-title="GBESE" style="--d:200ms">
+        <div class="release-cover">
+          <img src="./assets/photography/portrait-green-hand.jpg" alt="GBESE cover art">
+        </div>
+        <div class="release-title">GBESE</div>
+        <div class="release-meta">Prod. Txmpo · Afrobeats</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Watch : YouTube (full page) -->
+  <section class="stage" id="watch">
+    <div class="stage-bg"></div>
+    <div class="stage-inner">
+      <div class="stage-head">
+        <div class="reveal section-label">Watch</div>
+        <div class="reveal stage-script" style="--d:80ms">DND</div>
+        <div class="reveal stage-sub" style="--d:140ms">Official Video</div>
+      </div>
+      <div class="reveal" style="--d:200ms; width:100%">
+        <div class="media-frame">
+          <iframe class="embed-yt" src="https://www.youtube.com/embed/4AwoAGC87pY"
+            title="OG Emmy — DND (Official Video)"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="reveal" style="--d:260ms">
+        <button id="ytSub" class="btn btn-secondary btn-md">Subscribe on YouTube</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Listen : Spotify (full page) -->
+  <section class="stage" id="listen">
+    <div class="stage-bg"></div>
+    <div class="stage-inner">
+      <div class="stage-head">
+        <div class="reveal section-label">Listen</div>
+        <h2 class="reveal stage-title" style="--d:80ms">Stream Everywhere</h2>
+        <div class="reveal stage-sub" style="--d:140ms">The full catalogue on Spotify</div>
+      </div>
+      <div class="reveal" style="--d:200ms; width:100%">
+        <div class="media-frame">
+          <iframe class="embed-spotify"
+            src="https://open.spotify.com/embed/artist/5JivqktH6N1eEmaZ5f0qGO?utm_source=generator&amp;theme=0"
+            title="OG Emmy on Spotify"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="reveal stream-links" style="--d:260ms">
+        <a class="btn btn-primary btn-md" href="https://open.spotify.com/artist/5JivqktH6N1eEmaZ5f0qGO" target="_blank" rel="noreferrer">Open in Spotify</a>
+        <a class="social" href="https://open.spotify.com/artist/5JivqktH6N1eEmaZ5f0qGO" target="_blank" rel="noreferrer"><img src="./assets/icons/social-spotify.png" alt="Spotify"></a>
+        <a class="social" href="https://music.apple.com/gb/artist/og-emmy/1292082757" target="_blank" rel="noreferrer"><img src="./assets/icons/social-applemusic.svg" alt="Apple Music"></a>
+        <a class="social" href="https://www.youtube.com/@OGEMMYOFFICIAL" target="_blank" rel="noreferrer"><img src="./assets/icons/social-youtube.png" alt="YouTube"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="sec-stack">
+    <div class="reveal section-label">On the Road</div>
+    <div class="gallery-grid">
+      <img class="reveal" src="./assets/photography/candid-adesope-backstage.jpg" alt="">
+      <img class="reveal" style="--d:60ms" src="./assets/photography/candid-with-friends-carpark.jpg" alt="">
+      <img class="reveal" style="--d:120ms" src="./assets/photography/street-mercedes-night.jpg" alt="">
+      <img class="reveal" style="--d:180ms" src="./assets/photography/portrait-mirror-backstage.jpg" alt="">
+      <img class="reveal" style="--d:240ms" src="./assets/photography/street-glass-tower.jpg" alt="">
+      <img class="reveal" style="--d:300ms" src="./assets/photography/portrait-red-green-crouch.jpg" alt="">
+    </div>
+  </section>
+
+  <!-- Events -->
+  <section class="sec-stack" id="events">
+    <div class="reveal section-label">Live</div>
+    <div class="reveal events-panel" style="--d:80ms">
+      <span class="events-status badge badge-gold">Coming Soon</span>
+      <h2 class="events-headline">Events</h2>
+      <p class="events-note">New shows for the 2026 season are being confirmed. There are no dates on sale just yet &mdash; be the first to know when tickets drop, and reach out directly if you&rsquo;re booking a stage.</p>
+      <button id="eventsCta" class="btn btn-primary btn-md">Enquire About a Show</button>
+    </div>
+  </section>
+
+  <!-- Merch -->
+  <section class="sec-stack" id="merch">
+    <div class="reveal section-label">Shop</div>
+    <div class="reveal merch-grid" style="--d:80ms">
+      <div class="merch-card"><span class="badge badge-gold">Coming Soon</span><div class="merch-name">Tour Tee</div></div>
+      <div class="merch-card"><span class="badge badge-gold">Coming Soon</span><div class="merch-name">Spotlight Hoodie</div></div>
+      <div class="merch-card"><span class="badge badge-gold">Coming Soon</span><div class="merch-name">OG Cap</div></div>
+    </div>
+    <div class="reveal merch-note" style="--d:160ms">The first merch drop lands soon. Check back &mdash; or follow along below for the release.</div>
+  </section>
+
+  <!-- Follow : Instagram (full page, animated) -->
+  <section class="stage" id="follow">
+    <div class="stage-bg"></div>
+    <div class="stage-inner">
+      <div class="stage-head">
+        <div class="reveal section-label">Follow</div>
+        <div class="reveal stage-script" style="--d:80ms">@ogemmmy</div>
+        <div class="reveal stage-sub" style="--d:140ms">Day to day, on Instagram</div>
+      </div>
+      <div class="reveal" style="--d:200ms; width:100%">
+        <div class="media-frame float">
+          <iframe class="embed-ig" src="https://www.instagram.com/ogemmmy/embed" title="OG Emmy on Instagram" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="reveal" style="--d:260ms">
+        <a class="btn btn-primary btn-md" href="https://www.instagram.com/ogemmmy/?hl=en" target="_blank" rel="noreferrer">Follow on Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section class="sec-booking" id="booking">
+    <div class="section-label">Booking &amp; Press</div>
+    <h2>Bring OG Emmy to your stage.</h2>
+    <form id="bookingForm">
+      <label class="field"><span>Name</span><input type="text" placeholder="Your name"></label>
+      <label class="field"><span>Email</span><input type="email" placeholder="you@label.com"></label>
+      <label class="field"><span>Event details</span><input type="text" placeholder="Venue, date, city"></label>
+      <button type="submit" class="btn btn-primary btn-lg">Send Enquiry</button>
+    </form>
+    <div class="booking-thanks" id="bookingThanks" hidden>Thanks &mdash; the team will be in touch shortly.</div>
+    <div class="booking-email">Direct booking enquiries: <a href="mailto:ogemmyszn@gmail.com">ogemmyszn@gmail.com</a></div>
+    <div class="booking-social">
+      <a class="social" href="https://www.instagram.com/ogemmmy/?hl=en" target="_blank" rel="noreferrer"><img src="./assets/icons/social-instagram.png" alt="Instagram"></a>
+      <a class="social" href="https://x.com/ogemmyofficial" target="_blank" rel="noreferrer"><img src="./assets/icons/social-x.png" alt="X"></a>
+      <a class="social" href="https://www.youtube.com/@OGEMMYOFFICIAL" target="_blank" rel="noreferrer"><img src="./assets/icons/social-youtube.png" alt="YouTube"></a>
+      <a class="social" href="https://open.spotify.com/artist/5JivqktH6N1eEmaZ5f0qGO" target="_blank" rel="noreferrer"><img src="./assets/icons/social-spotify.png" alt="Spotify"></a>
+      <a class="social" href="https://music.apple.com/gb/artist/og-emmy/1292082757" target="_blank" rel="noreferrer"><img src="./assets/icons/social-applemusic.svg" alt="Apple Music"></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <img class="footer-logo" src="./assets/logo.png" alt="OG Emmy">
+      <div class="footer-social">
+        <a class="social social-sm" href="https://www.instagram.com/ogemmmy/?hl=en" target="_blank" rel="noreferrer"><img src="./assets/icons/social-instagram.png" alt="Instagram"></a>
+        <a class="social social-sm" href="https://x.com/ogemmyofficial" target="_blank" rel="noreferrer"><img src="./assets/icons/social-x.png" alt="X"></a>
+        <a class="social social-sm" href="https://www.youtube.com/@OGEMMYOFFICIAL" target="_blank" rel="noreferrer"><img src="./assets/icons/social-youtube.png" alt="YouTube"></a>
+        <a class="social social-sm" href="https://open.spotify.com/artist/5JivqktH6N1eEmaZ5f0qGO" target="_blank" rel="noreferrer"><img src="./assets/icons/social-spotify.png" alt="Spotify"></a>
+        <a class="social social-sm" href="https://music.apple.com/gb/artist/og-emmy/1292082757" target="_blank" rel="noreferrer"><img src="./assets/icons/social-applemusic.svg" alt="Apple Music"></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footerCopy">© OG Emmy. All rights reserved.</span>
+      <a class="footer-credit" href="https://wearejmkstudios.io" target="_blank" rel="noreferrer">Made with ❤ by JMK Studios</a>
+    </div>
+  </footer>
+
+</div>
+
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Now-playing preview modal -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-sub">Now playing (preview)</div>
+    <button class="modal-close" id="modalClose">Close</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  document.getElementById('footerCopy').textContent =
+    '© ' + new Date().getFullYear() + ' OG Emmy. All rights reserved.';
+
+  var app = document.getElementById('app');
+  requestAnimationFrame(function () { app.classList.add('ready'); });
+
+  // Splash: entrance ~1.2s, fade at 1.9s, remove at 2.5s
+  var splash = document.getElementById('splash');
+  setTimeout(function () { splash.classList.add('fade'); }, 1900);
+  setTimeout(function () { if (splash.parentNode) splash.parentNode.removeChild(splash); }, 2500);
+
+  // Hero slideshow
+  var slides = document.querySelectorAll('.hero-slide');
+  var dots = document.querySelectorAll('.hero-dots span');
+  var hi = 0;
+  setInterval(function () {
+    slides[hi].classList.remove('active'); dots[hi].classList.remove('active');
+    hi = (hi + 1) % slides.length;
+    slides[hi].classList.add('active'); dots[hi].classList.add('active');
+  }, 4500);
+
+  // Scroll reveal
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  // Back to top
+  var btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', function () { btt.classList.toggle('show', window.scrollY > 700); });
+  btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // Now-playing modal
+  var modal = document.getElementById('modal');
+  var modalTitle = document.getElementById('modalTitle');
+  function openModal(title) { modalTitle.textContent = title; modal.hidden = false; }
+  function closeModal() { modal.hidden = true; }
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('streamBtn').addEventListener('click', function () { openModal('My Baby'); });
+  document.querySelectorAll('.release').forEach(function (el) {
+    el.addEventListener('click', function () { openModal(el.getAttribute('data-title')); });
+  });
+
+  // Scroll-to helpers
+  function scrollTo(id) { var t = document.getElementById(id); if (t) t.scrollIntoView({ behavior: 'smooth' }); }
+  document.getElementById('heroBooking').addEventListener('click', function () { scrollTo('booking'); });
+  document.getElementById('eventsCta').addEventListener('click', function () { scrollTo('booking'); });
+  document.getElementById('ytSub').addEventListener('click', function () {
+    window.open('https://www.youtube.com/@OGEMMYOFFICIAL', '_blank');
+  });
+
+  // Booking form
+  var form = document.getElementById('bookingForm');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    form.hidden = true;
+    document.getElementById('bookingThanks').hidden = false;
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Give+You+Glory&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import 'tokens/colors.css';
+@import 'tokens/typography.css';
+@import 'tokens/spacing.css';
+@import 'tokens/effects.css';
+*{box-sizing:border-box}
+body{background:var(--bg-page);color:var(--text-primary);font-family:var(--font-body);margin:0}
+a{color:var(--text-accent)}
+a:hover{color:var(--accent-primary-hover)}
