@@ -243,6 +243,16 @@
   }
   .sec-booking h2 { font-family: var(--font-display); color: var(--paper-0); font-size: 40px; margin: 0; }
   #bookingForm { display: flex; flex-direction: column; gap: var(--space-4); }
+  .field input[aria-invalid="true"] { border-color: var(--rose-400); }
+  .field-error { font-family: var(--font-body); font-size: 12px; color: var(--rose-400); }
+  .form-error {
+    font-family: var(--font-body); font-size: 14px; color: var(--rose-400);
+    line-height: var(--lh-normal);
+  }
+  .form-error a { color: var(--gold-300); }
+  .btn[disabled] { opacity: .55; cursor: default; }
+  /* honeypot — must stay visually hidden but reachable to bots */
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   .booking-thanks { font-family: var(--font-body); color: var(--gold-300); font-size: 16px; }
   .booking-email { font-family: var(--font-mono); font-size: 13px; color: var(--text-tertiary); }
   .booking-email a { color: var(--gold-300); }
@@ -499,13 +509,16 @@
   <section class="sec-booking" id="booking">
     <div class="section-label">Booking &amp; Press</div>
     <h2>Bring OG Emmy to your stage.</h2>
-    <form id="bookingForm">
-      <label class="field"><span>Name</span><input type="text" placeholder="Your name"></label>
-      <label class="field"><span>Email</span><input type="email" placeholder="you@label.com"></label>
-      <label class="field"><span>Event details</span><input type="text" placeholder="Venue, date, city"></label>
-      <button type="submit" class="btn btn-primary btn-lg">Send Enquiry</button>
+    <form id="bookingForm" novalidate>
+      <label class="field"><span>Name</span><input id="bName" name="name" type="text" placeholder="Your name" autocomplete="name" required></label>
+      <label class="field"><span>Email</span><input id="bEmail" name="email" type="email" placeholder="you@label.com" autocomplete="email" required></label>
+      <label class="field"><span>Event details</span><input id="bMessage" name="message" type="text" placeholder="Venue, date, city" required></label>
+      <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_subject" value="Booking enquiry — ogemmy.vercel.app">
+      <button type="submit" id="bSubmit" class="btn btn-primary btn-lg">Send Enquiry</button>
+      <div class="form-error" id="bError" role="alert" hidden></div>
     </form>
-    <div class="booking-thanks" id="bookingThanks" hidden>Thanks &mdash; the team will be in touch shortly.</div>
+    <div class="booking-thanks" id="bookingThanks" role="status" hidden>Thanks &mdash; the team will be in touch shortly.</div>
     <div class="booking-email">Direct booking enquiries: <a href="mailto:ogemmyszn@gmail.com">ogemmyszn@gmail.com</a></div>
     <div class="booking-social">
       <a class="social" href="https://www.instagram.com/ogemmmy/?hl=en" target="_blank" rel="noreferrer"><img src="./assets/icons/social-instagram.png" alt="Instagram"></a>
@@ -609,11 +622,89 @@
   });
 
   // Booking form
+  // Paste the Formspree form id here to enable in-page submission
+  // (formspree.io -> your form -> endpoint https://formspree.io/f/XXXXXXXX).
+  // While this is empty the form falls back to opening the visitor's mail client.
+  var FORMSPREE_ID = '';
+  var BOOKING_EMAIL = 'ogemmyszn@gmail.com';
+
   var form = document.getElementById('bookingForm');
+  var submitBtn = document.getElementById('bSubmit');
+  var formError = document.getElementById('bError');
+  var thanks = document.getElementById('bookingThanks');
+  var fields = ['bName', 'bEmail', 'bMessage'].map(function (id) { return document.getElementById(id); });
+
+  function setError(msg) {
+    formError.innerHTML = msg;
+    formError.hidden = !msg;
+  }
+  function markInvalid(el, invalid) {
+    el.setAttribute('aria-invalid', invalid ? 'true' : 'false');
+  }
+  function validate() {
+    var firstBad = null;
+    fields.forEach(function (el) {
+      var v = el.value.trim();
+      var ok = el.type === 'email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : v.length > 0;
+      markInvalid(el, !ok);
+      if (!ok && !firstBad) firstBad = el;
+    });
+    if (firstBad) {
+      setError('Please fill in every field with a valid email address.');
+      firstBad.focus();
+      return false;
+    }
+    setError('');
+    return true;
+  }
+  function succeed() {
+    form.hidden = true;
+    thanks.hidden = false;
+  }
+  function mailtoFallback() {
+    var subject = 'Booking enquiry — ' + fields[0].value.trim();
+    var body = 'Name: ' + fields[0].value.trim()
+      + '\nEmail: ' + fields[1].value.trim()
+      + '\nEvent details: ' + fields[2].value.trim();
+    window.location.href = 'mailto:' + BOOKING_EMAIL
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+    succeed();
+  }
+
+  fields.forEach(function (el) {
+    el.addEventListener('input', function () {
+      if (el.getAttribute('aria-invalid') === 'true') { markInvalid(el, false); setError(''); }
+    });
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    form.hidden = true;
-    document.getElementById('bookingThanks').hidden = false;
+    if (!validate()) return;
+    if (!FORMSPREE_ID) { mailtoFallback(); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    setError('');
+
+    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: new FormData(form)
+    }).then(function (res) {
+      if (res.ok) { succeed(); return; }
+      return res.json().then(function (data) {
+        var msg = (data && data.errors && data.errors.length)
+          ? data.errors.map(function (x) { return x.message; }).join(', ')
+          : 'Something went wrong sending that.';
+        throw new Error(msg);
+      });
+    }).catch(function (err) {
+      setError(err.message + ' You can email <a href="mailto:' + BOOKING_EMAIL + '">'
+        + BOOKING_EMAIL + '</a> directly instead.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Enquiry';
+    });
   });
 })();
 </script>
