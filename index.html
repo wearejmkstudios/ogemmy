@@ -195,6 +195,9 @@
   .stream-links { display: flex; gap: var(--space-5); align-items: center; flex-wrap: wrap; }
   .float { animation: floaty 6.5s ease-in-out infinite; }
   @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .follow-grid { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: var(--space-6); align-items: start; width: 100%; }
+  .reel { width: 100%; aspect-ratio: 9/16; object-fit: cover; display: block; background: var(--bg-surface-raised); }
+  @media (max-width: 760px) { .follow-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
 
   /* ---------- Events ---------- */
   .events-panel {
@@ -501,8 +504,12 @@
         <div class="reveal stage-script" style="--d:80ms">@ogemmmy</div>
         <div class="reveal stage-sub" style="--d:140ms">Day to day, on Instagram</div>
       </div>
-      <div class="reveal" style="--d:200ms; width:100%">
+      <div class="reveal follow-grid" style="--d:200ms">
         <div class="media-frame float">
+          <video class="reel" src="./assets/video/reel-studio.mp4" poster="./assets/video/reel-studio-poster.jpg"
+            muted autoplay loop playsinline preload="metadata" aria-label="OG Emmy — studio reel"></video>
+        </div>
+        <div class="media-frame">
           <iframe class="embed-ig" src="https://www.instagram.com/ogemmmy/embed" title="OG Emmy on Instagram" loading="lazy"></iframe>
         </div>
       </div>
